@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1200FF;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .hero.fade-out {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 900;
+            color: white;
+            text-align: center;
+            letter-spacing: -0.02em;
+            text-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+            z-index: 10;
+            position: relative;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2rem;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 1rem 2rem;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Seifenblasen Container */
+        .bubbles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .bubbles-container .soap-bubble {
+            pointer-events: auto;
+        }
+
+        /* Seifenblasen Styles */
+        .soap-bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, 
+                rgba(255, 255, 255, 0.3) 0%, 
+                rgba(255, 255, 255, 0.1) 30%, 
+                rgba(255, 255, 255, 0.05) 70%, 
+                rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                inset 0 0 20px rgba(255, 255, 255, 0.1),
+                0 4px 20px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            will-change: transform;
+        }
+
+        .soap-bubble::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 30%;
+            height: 30%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        .soap-bubble img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            filter: blur(8px) opacity(0.6);
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+        }
+
+        .soap-bubble:hover {
+            transform: scale(1.1);
+            background: radial-gradient(circle at 30% 30%, 
+                rgba(255, 255, 255, 0.4) 0%, 
+                rgba(255, 255, 255, 0.2) 30%, 
+                rgba(255, 255, 255, 0.1) 70%, 
+                rgba(255, 255, 255, 0.05) 100%);
+        }
+
+        .soap-bubble:hover img {
+            filter: blur(4px) opacity(0.8);
+            transform: scale(1.05);
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Verschiedene Seifenblasen-Größen (Angepasst für 8 Blasen, da 9. Element entfernt wurde) */
+        .soap-bubble.small {
+            width: 80px;
+            height: 80px;
+        }
+
+        .soap-bubble.medium {
+            width: 120px;
+            height: 120px;
+        }
+
+        .soap-bubble.large {
+            width: 160px;
+            height: 160px;
+        }
+
+        /* Einfache Orbit-Animationen (Angepasst für 8 Blasen) */
+        .soap-bubble:nth-child(1) { 
+            animation: float1 40s linear infinite;
+            left: 20vw;
+            top: 20vh;
+        }
+        .soap-bubble:nth-child(2) { 
+            animation: float2 45s linear infinite;
+            left: 70vw;
+            top: 30vh;
+        }
+        .soap-bubble:nth-child(3) { 
+            animation: float3 38s linear infinite;
+            left: 80vw;
+            top: 60vh;
+        }
+        .soap-bubble:nth-child(4) { 
+            animation: float4 50s linear infinite;
+            left: 60vw;
+            top: 80vh;
+        }
+        .soap-bubble:nth-child(5) { 
+            animation: float5 42s linear infinite;
+            left: 25vw;
+            top: 75vh;
+        }
+        .soap-bubble:nth-child(6) { 
+            animation: float6 48s linear infinite;
+            left: 10vw;
+            top: 50vh;
+        }
+        .soap-bubble:nth-child(7) { 
+            animation: float7 44s linear infinite;
+            left: 40vw;
+            top: 15vh;
+        }
+        .soap-bubble:nth-child(8) { 
+            animation: float8 52s linear infinite;
+            left: 85vw;
+            top: 40vh;
+        }
+        /* .soap-bubble:nth-child(9) wurde entfernt */
+
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0) scale(0.8); }
+            25% { transform: translate(50px, -30px) scale(0.9); }
+            50% { transform: translate(20px, 40px) scale(0.85); }
+            75% { transform: translate(-30px, 10px) scale(0.95); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0) scale(0.9); }
+            25% { transform: translate(-40px, 20px) scale(0.8); }
+            50% { transform: translate(30px, -25px) scale(1); }
+            75% { transform: translate(10px, 35px) scale(0.85); }
+        }
+
+        @keyframes float3 {
+            0%, 100% { transform: translate(0, 0) scale(0.85); }
+            25% { transform: translate(25px, 40px) scale(0.95); }
+            50% { transform: translate(-35px, -20px) scale(0.8); }
+            75% { transform: translate(45px, 15px) scale(0.9); }
+        }
+
+        @keyframes float4 {
+            0%, 100% { transform: translate(0, 0) scale(0.9); }
+            25% { transform: translate(-25px, -35px) scale(0.85); }
+            50% { transform: translate(40px, 25px) scale(1); }
+            75% { transform: translate(-15px, -10px) scale(0.8); }
+        }
+
+        @keyframes float5 {
+            0%, 100% { transform: translate(0, 0) scale(0.8); }
+            25% { transform: translate(35px, -20px) scale(0.95); }
+            50% { transform: translate(-20px, 30px) scale(0.85); }
+            75% { transform: translate(25px, -15px) scale(0.9); }
+        }
+
+        @keyframes float6 {
+            0%, 100% { transform: translate(0, 0) scale(0.85); }
+            25% { transform: translate(-30px, 25px) scale(0.8); }
+            50% { transform: translate(20px, -35px) scale(0.95); }
+            75% { transform: translate(-40px, 10px) scale(0.9); }
+        }
+
+        @keyframes float7 {
+            0%, 100% { transform: translate(0, 0) scale(0.9); }
+            25% { transform: translate(30px, 30px) scale(0.85); }
+            50% { transform: translate(-25px, -15px) scale(0.8); }
+            75% { transform: translate(15px, 25px) scale(1); }
+        }
+
+        @keyframes float8 {
+            0%, 100% { transform: translate(0, 0) scale(0.8); }
+            25% { transform: translate(-35px, 15px) scale(0.95); }
+            50% { transform: translate(30px, -30px) scale(0.85); }
+            75% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+        /* @keyframes float9 wurde entfernt */
+
+        /* Portfolio Gallery */
+        .portfolio {
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Sorted gallery for scroll section - 4x2 Grid im A2 Format */
+        .sorted-gallery {
+            padding: 4rem 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Beibehalten: 4 Spalten */
+            grid-template-rows: auto; /* Beibehalten: Reihen automatisch angepasst */
+            gap: 2rem;
+            opacity: 0;
+            transition: opacity 1s ease;
+            min-height: 100vh;
+        }
+
+        .sorted-gallery.visible {
+            opacity: 1;
+        }
+
+        .image-card {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 420 / 594;
+            margin: 0;
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: gentleWiggle 4s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        /* animation-delay für das 9. Element wurde entfernt */
+        .image-card:nth-child(1) { animation-delay: 0s; }
+        .image-card:nth-child(2) { animation-delay: 0.5s; }
+        .image-card:nth-child(3) { animation-delay: 1s; }
+        .image-card:nth-child(4) { animation-delay: 1.5s; }
+        .image-card:nth-child(5) { animation-delay: 2s; }
+        .image-card:nth-child(6) { animation-delay: 2.5s; }
+        .image-card:nth-child(7) { animation-delay: 3s; }
+        .image-card:nth-child(8) { animation-delay: 3.5s; }
+
+
+        @keyframes gentleWiggle {
+            0%, 100% {
+                transform: rotate(0deg) translateX(0px);
+            }
+            25% {
+                transform: rotate(0.5deg) translateX(2px);
+            }
+            50% {
+                transform: rotate(0deg) translateX(0px);
+            }
+            75% {
+                transform: rotate(-0.5deg) translateX(-2px);
+            }
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .image-card:hover {
+            transform: scale(1.05) translateY(-10px) !important;
+            animation-play-state: paused;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            z-index: 100;
+        }
+
+        .image-card:hover img {
+            transform: scale(1.02);
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+        }
+
+        .image-card:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .image-info h3 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .image-info p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .modal img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: -3rem;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sorted-gallery {
+                grid-template-columns: repeat(2, 1fr); /* Bei kleineren Bildschirmen 2 Spalten */
+                grid-template-rows: auto;
+                max-width: 800px;
+                gap: 1.5rem;
+            }
+            /* Die spezielle Regel für nth-child(9) ist jetzt nicht mehr nötig, da es nur 8 Bilder gibt */
+        }
+
+        @media (max-width: 768px) {
+            .sorted-gallery {
+                grid-template-columns: 1fr; /* Bei sehr kleinen Bildschirmen 1 Spalte */
+                grid-template-rows: auto;
+                gap: 1rem;
+                padding: 2rem 1rem;
+            }
+            /* Die spezielle Regel für nth-child(9) ist jetzt nicht mehr nötig, da es nur 8 Bilder gibt */
+            
+            .image-card {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .nav {
+                gap: 1rem;
+                padding: 0.8rem 1.5rem;
+                bottom: 1rem;
+            }
+
+            .nav a {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero" id="home">
+            <h1>Design Portfolio</h1>
+            
+            <div class="bubbles-container" id="bubblesContainer">
+            </div>
+        </section>
+
+        <nav class="nav">
+            <a href="#home">Home</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contact">Kontakt</a>
+        </nav>
+
+        <section class="portfolio" id="portfolio">
+            <div style="text-align: center; margin-bottom: 4rem; padding-top: 4rem;">
+                <h2 style="color: white; font-size: 3rem; margin-bottom: 1rem; text-shadow: 0 4px 16px rgba(0, 0, 0, 0.3); font-weight: 900;">
+                    Portfolio
+                </h2>
+                <p style="color: rgba(255, 255, 255, 0.7); font-size: 1rem;">
+                    Alle 8 Poster in Originalgröße • Klicke für Vollansicht
+                </p>
+            </div>
+            <div class="sorted-gallery" id="sortedGallery">
+            </div>
+        </section>
+
+        <section id="contact" style="text-align: center; padding: 8rem 2rem; background: #1200FF;">
+            <h2 style="color: white; font-size: 3rem; margin-bottom: 2rem; text-shadow: 0 4px 16px rgba(0, 0, 0, 0.3); font-weight: 900;">
+                Kontakt
+            </h2>
+            <p style="color: rgba(255, 255, 255, 0.8); font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem auto;">
+                Interessiert an einer Zusammenarbeit? Lass uns sprechen!
+            </p>
+            <div style="margin-top: 2rem;">
+                <a href="mailto:armandabbas@web.de" style="color: white; text-decoration: none; font-size: 1.1rem; padding: 1rem 2rem; background: rgba(255, 255, 255, 0.1); border-radius: 50px; backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.3s ease; display: inline-block;">
+                    E-Mail senden
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeBtn">&times;</span>
+            <img id="modalImg" src="" alt="">
+        </div>
+    </div>
+
+    <script>
+        // Portfolio images configuration
+        const portfolioImages = [
+            {
+                src: 'bild1.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
+                title: 'Seaside Retreat',
+                description: 'Eine ruhige Illustration eines Küstenurlaubs.'
+            },
+            {
+                src: 'bild2.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
+                title: 'Sailing Adventure',
+                description: 'Fängt die Freiheit des offenen Meeres ein.'
+            },
+            {
+                src: 'bild3.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
+                title: 'Mediterranean View',
+                description: 'Lebendige Farben einer europäischen Küstenlinie.'
+            },
+            {
+                src: 'bild4.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
+                title: 'Lakeside Cabin',
+                description: 'Gemütlich und rustikal, ein perfekter Natururlaub.'
+            },
+            {
+                src: 'obst1.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
+                title: 'Citrus Bloom',
+                description: 'Eine erfrischende Interpretation von Fruchtillustrationen.'
+            },
+            {
+                // WICHTIG: 'obst2.png' ist in Ihrem letzten GitHub-Screenshot NICHT aufgelistet.
+                // Wenn diese Datei nicht im Root-Verzeichnis existiert, wird sie nicht geladen.
+                // Bitte stellen Sie sicher, dass 'obst2.png' auf GitHub im Root-Verzeichnis liegt.
+                src: 'obst2.png', 
+                title: 'Grapefruit Zest',
+                description: 'Kräftig und saftig, feiert natürliche Aromen.'
+            },
+            {
+                src: 'obst3.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
+                title: 'Orange Harvest',
+                description: 'Hell und energiegeladen, zeigt frische Produkte.'
+            },
+            {
+                src: 'obst4.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
+                title: 'Lemon Delight',
+                description: 'Sonnig und lebendig, perfekt für ein Sommerthema.'
+            }
+            // Das 9. Bildelement wurde hier entfernt.
+        ];
+
+        // DOM Elements
+        const bubblesContainer = document.getElementById('bubblesContainer');
+        const sortedGallery = document.getElementById('sortedGallery');
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modalImg');
+        const closeBtn = document.getElementById('closeBtn');
+        const hero = document.querySelector('.hero');
+
+        // Create soap bubbles
+        function createSoapBubbles() {
+            // Schleife läuft nur 8 Mal, da portfolioImages jetzt nur 8 Elemente hat
+            portfolioImages.forEach((image, index) => {
+                const bubble = document.createElement('div');
+                const sizes = ['small', 'medium', 'large'];
+                const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+                
+                bubble.className = `soap-bubble ${randomSize}`;
+                bubble.innerHTML = `<img src="${image.src}" alt="${image.title}" loading="lazy">`;
+                
+                // Click event
+                bubble.addEventListener('click', () => {
+                    openModal(image);
+                });
+                
+                bubblesContainer.appendChild(bubble);
+            });
+        }
+
+        // Create portfolio gallery
+        function createPortfolioGallery() {
+            // Schleife läuft nur 8 Mal, da portfolioImages jetzt nur 8 Elemente hat
+            portfolioImages.forEach((image) => {
+                const card = document.createElement('div');
+                card.className = 'image-card';
+                card.innerHTML = `
+                    <img src="${image.src}" alt="${image.title}" loading="lazy">
+                    <div class="image-overlay">
+                        <div class="image-info">
+                            <h3>${image.title}</h3>
+                            <p>${image.description}</p>
+                        </div>
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => {
+                    openModal(image);
+                });
+
+                sortedGallery.appendChild(card);
+            });
+        }
+
+        function openModal(image) {
+            modal.classList.add('active');
+            modalImg.src = image.src;
+            modalImg.alt = image.title;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Handle scroll effects
+        function handleScroll() {
+            const scrollY = window.pageYOffset;
+            const windowHeight = window.innerHeight;
+            
+            if (scrollY > windowHeight * 0.3) {
+                hero.classList.add('fade-out');
+            } else {
+                hero.classList.remove('fade-out');
+            }
+            
+            if (scrollY > windowHeight * 0.8) {
+                sortedGallery.classList.add('visible');
+                bubblesContainer.style.opacity = '0';
+            } else {
+                sortedGallery.classList.remove('visible');
+                bubblesContainer.style.opacity = '1';
+            }
+        }
+
+        // Event listeners
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        window.addEventListener('scroll', handleScroll);
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initialize
+        window.addEventListener('load', () => {
+            createSoapBubbles();
+            createPortfolioGallery();
+        });
+    </script>
+</body>
+</html>
