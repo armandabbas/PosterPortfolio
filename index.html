@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #1200FF;
             min-height: 100vh;
             overflow-x: hidden;
@@ -105,7 +105,9 @@
         }
 
         .bubbles-container .soap-bubble {
-            pointer-events: auto;
+            /* pointer-events: auto; bleibt hier, um Animationen zu ermöglichen,
+               aber der Cursor wird unten auf default gesetzt */
+            pointer-events: auto; 
         }
 
         /* Seifenblasen Styles */
@@ -122,7 +124,7 @@
             box-shadow: 
                 inset 0 0 20px rgba(255, 255, 255, 0.1),
                 0 4px 20px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
+            cursor: default; /* GEÄNDERT: Cursor ist jetzt Standardpfeil */
             transition: all 0.3s ease;
             overflow: hidden;
             will-change: transform;
@@ -381,7 +383,7 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
-            opacity: 0; /* Standardmäßig unsichtbar */
+            opacity: 0;
             transition: opacity 0.3s ease;
             display: flex;
             align-items: flex-end;
@@ -389,11 +391,11 @@
         }
 
         .image-card:hover .image-overlay {
-            opacity: 0; /* Auch beim Hover unsichtbar lassen, da keine Inhalte */
+            opacity: 0; 
         }
 
         .image-info {
-            display: none; /* Hier wird der Inhalt komplett ausgeblendet */
+            display: none; 
         }
 
         /* Modal */
@@ -538,27 +540,27 @@
         // Portfolio images configuration
         const portfolioImages = [
             {
-                src: 'bild1.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
-                title: '', // Titel entfernt
-                description: '' // Beschreibung entfernt
+                src: 'bild1.png', 
+                title: '', 
+                description: '' 
             },
             {
-                src: 'bild2.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
+                src: 'bild2.png', 
                 title: '',
                 description: ''
             },
             {
-                src: 'bild3.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
+                src: 'bild3.png', 
                 title: '',
                 description: ''
             },
             {
-                src: 'bild4.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
+                src: 'bild4.png', 
                 title: '',
                 description: ''
             },
             {
-                src: 'obst1.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
+                src: 'obst1.png', 
                 title: '',
                 description: ''
             },
@@ -571,16 +573,15 @@
                 description: ''
             },
             {
-                src: 'obst3.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
+                src: 'obst3.png', 
                 title: '',
                 description: ''
             },
             {
-                src: 'obst4.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
+                src: 'obst4.png', 
                 title: '',
                 description: ''
             }
-            // Das 9. Bildelement wurde entfernt.
         ];
 
         // DOM Elements
@@ -601,10 +602,10 @@
                 bubble.className = `soap-bubble ${randomSize}`;
                 bubble.innerHTML = `<img src="${image.src}" alt="${image.title}" loading="lazy">`;
                 
-                // Click event
-                bubble.addEventListener('click', () => {
-                    openModal(image);
-                });
+                // Klick-Event für Bubbles entfernt
+                // bubble.addEventListener('click', () => {
+                //     openModal(image);
+                // });
                 
                 bubblesContainer.appendChild(bubble);
             });
@@ -615,11 +616,10 @@
             portfolioImages.forEach((image) => {
                 const card = document.createElement('div');
                 card.className = 'image-card';
-                // Titel und Beschreibung wurden aus dem image-overlay entfernt
                 card.innerHTML = `
                     <img src="${image.src}" alt="${image.title}" loading="lazy">
                     <div class="image-overlay">
-                        <div class="image-info"></div>
+                        <div class="image-info"></div> 
                     </div>
                 `;
                 
