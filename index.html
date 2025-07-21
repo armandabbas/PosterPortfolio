@@ -175,7 +175,7 @@
             }
         }
 
-        /* Verschiedene Seifenblasen-Größen */
+        /* Verschiedene Seifenblasen-Größen (Angepasst für 8 Blasen, da 9. Element entfernt wurde) */
         .soap-bubble.small {
             width: 80px;
             height: 80px;
@@ -191,7 +191,7 @@
             height: 160px;
         }
 
-        /* Einfache Orbit-Animationen */
+        /* Einfache Orbit-Animationen (Angepasst für 8 Blasen) */
         .soap-bubble:nth-child(1) { 
             animation: float1 40s linear infinite;
             left: 20vw;
@@ -232,11 +232,7 @@
             left: 85vw;
             top: 40vh;
         }
-        .soap-bubble:nth-child(9) { 
-            animation: float9 46s linear infinite;
-            left: 15vw;
-            top: 35vh;
-        }
+        /* .soap-bubble:nth-child(9) wurde entfernt */
 
         @keyframes float1 {
             0%, 100% { transform: translate(0, 0) scale(0.8); }
@@ -293,13 +289,7 @@
             50% { transform: translate(30px, -30px) scale(0.85); }
             75% { transform: translate(-20px, 20px) scale(0.9); }
         }
-
-        @keyframes float9 {
-            0%, 100% { transform: translate(0, 0) scale(0.85); }
-            25% { transform: translate(25px, -25px) scale(0.8); }
-            50% { transform: translate(-30px, 35px) scale(0.95); }
-            75% { transform: translate(40px, -10px) scale(0.9); }
-        }
+        /* @keyframes float9 wurde entfernt */
 
         /* Portfolio Gallery */
         .portfolio {
@@ -308,14 +298,14 @@
             overflow: hidden;
         }
 
-        /* Sorted gallery for scroll section - 3x3 Grid im A2 Format */
+        /* Sorted gallery for scroll section - 4x2 Grid im A2 Format */
         .sorted-gallery {
             padding: 4rem 2rem;
             max-width: 1600px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr); /* Beibehalten: 4 Spalten */
+            grid-template-rows: auto; /* Beibehalten: Reihen automatisch angepasst */
             gap: 2rem;
             opacity: 0;
             transition: opacity 1s ease;
@@ -342,6 +332,7 @@
             transition: all 0.4s ease;
         }
 
+        /* animation-delay für das 9. Element wurde entfernt */
         .image-card:nth-child(1) { animation-delay: 0s; }
         .image-card:nth-child(2) { animation-delay: 0.5s; }
         .image-card:nth-child(3) { animation-delay: 1s; }
@@ -350,7 +341,7 @@
         .image-card:nth-child(6) { animation-delay: 2.5s; }
         .image-card:nth-child(7) { animation-delay: 3s; }
         .image-card:nth-child(8) { animation-delay: 3.5s; }
-        .image-card:nth-child(9) { animation-delay: 0.8s; }
+
 
         @keyframes gentleWiggle {
             0%, 100% {
@@ -470,31 +461,22 @@
         /* Responsive Design */
         @media (max-width: 1024px) {
             .sorted-gallery {
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: repeat(5, 1fr);
+                grid-template-columns: repeat(2, 1fr); /* Bei kleineren Bildschirmen 2 Spalten */
+                grid-template-rows: auto;
                 max-width: 800px;
                 gap: 1.5rem;
             }
-            
-            .image-card:nth-child(9) {
-                grid-column: 1 / -1;
-                max-width: 50%;
-                margin: 0 auto;
-            }
+            /* Die spezielle Regel für nth-child(9) ist jetzt nicht mehr nötig, da es nur 8 Bilder gibt */
         }
 
         @media (max-width: 768px) {
             .sorted-gallery {
-                grid-template-columns: 1fr;
-                grid-template-rows: repeat(9, 1fr);
+                grid-template-columns: 1fr; /* Bei sehr kleinen Bildschirmen 1 Spalte */
+                grid-template-rows: auto;
                 gap: 1rem;
                 padding: 2rem 1rem;
             }
-            
-            .image-card:nth-child(9) {
-                grid-column: 1;
-                max-width: 100%;
-            }
+            /* Die spezielle Regel für nth-child(9) ist jetzt nicht mehr nötig, da es nur 8 Bilder gibt */
             
             .image-card {
                 max-width: 400px;
@@ -535,7 +517,7 @@
                     Portfolio
                 </h2>
                 <p style="color: rgba(255, 255, 255, 0.7); font-size: 1rem;">
-                    Alle 9 Poster in Originalgröße • Klicke für Vollansicht
+                    Alle 8 Poster in Originalgröße • Klicke für Vollansicht
                 </p>
             </div>
             <div class="sorted-gallery" id="sortedGallery">
@@ -568,53 +550,49 @@
         // Portfolio images configuration
         const portfolioImages = [
             {
-                src: 'images/bild1.png',
+                src: 'bild1.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
                 title: 'Seaside Retreat',
-                description: 'A serene illustration of a coastal escape.'
+                description: 'Eine ruhige Illustration eines Küstenurlaubs.'
             },
             {
-                src: 'images/bild2.png',
+                src: 'bild2.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
                 title: 'Sailing Adventure',
-                description: 'Capturing the freedom of the open sea.'
+                description: 'Fängt die Freiheit des offenen Meeres ein.'
             },
             {
-                src: 'images/bild3.png',
+                src: 'bild3.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
                 title: 'Mediterranean View',
-                description: 'Vibrant colors of a European coastline.'
+                description: 'Lebendige Farben einer europäischen Küstenlinie.'
             },
             {
-                src: 'images/bild4.png',
+                src: 'bild4.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
                 title: 'Lakeside Cabin',
-                description: 'Cozy and rustic, a perfect nature getaway.'
+                description: 'Gemütlich und rustikal, ein perfekter Natururlaub.'
             },
             {
-                src: 'images/obst1.png', // Assuming obst1.png is an image you want to display
+                src: 'obst1.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
                 title: 'Citrus Bloom',
-                description: 'A refreshing take on fruit illustrations.'
+                description: 'Eine erfrischende Interpretation von Fruchtillustrationen.'
             },
             {
-                src: 'images/obst2.png',
+                // WICHTIG: 'obst2.png' ist in Ihrem letzten GitHub-Screenshot NICHT aufgelistet.
+                // Wenn diese Datei nicht im Root-Verzeichnis existiert, wird sie nicht geladen.
+                // Bitte stellen Sie sicher, dass 'obst2.png' auf GitHub im Root-Verzeichnis liegt.
+                src: 'obst2.png', 
                 title: 'Grapefruit Zest',
-                description: 'Bold and juicy, celebrating natural flavors.'
+                description: 'Kräftig und saftig, feiert natürliche Aromen.'
             },
             {
-                src: 'images/obst3.png',
+                src: 'obst3.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
                 title: 'Orange Harvest',
-                description: 'Bright and energetic, showcasing fresh produce.'
+                description: 'Hell und energiegeladen, zeigt frische Produkte.'
             },
             {
-                src: 'images/obst4.png',
+                src: 'obst4.png', // Pfad an Ihre GitHub-Struktur angepasst (ohne 'images/')
                 title: 'Lemon Delight',
-                description: 'Sunny and vibrant, perfect for a summer theme.'
-            },
-            {
-                // You only provided 8 images. If you have a 9th, replace this.
-                // Otherwise, you might consider adjusting your gallery layout
-                // or adding a placeholder image if 9 is crucial for design.
-                src: 'https://via.placeholder.com/420x594/E91E63/FFFFFF?text=Placeholder+9', 
-                title: 'Abstract Form',
-                description: 'An exploration of shapes and colors.'
+                description: 'Sonnig und lebendig, perfekt für ein Sommerthema.'
             }
+            // Das 9. Bildelement wurde hier entfernt.
         ];
 
         // DOM Elements
@@ -627,6 +605,7 @@
 
         // Create soap bubbles
         function createSoapBubbles() {
+            // Schleife läuft nur 8 Mal, da portfolioImages jetzt nur 8 Elemente hat
             portfolioImages.forEach((image, index) => {
                 const bubble = document.createElement('div');
                 const sizes = ['small', 'medium', 'large'];
@@ -646,6 +625,7 @@
 
         // Create portfolio gallery
         function createPortfolioGallery() {
+            // Schleife läuft nur 8 Mal, da portfolioImages jetzt nur 8 Elemente hat
             portfolioImages.forEach((image) => {
                 const card = document.createElement('div');
                 card.className = 'image-card';
